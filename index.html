@@ -1,0 +1,54 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Download Dubbing</title>
+</head>
+<body>
+    <button id="downloadBtn">Download Dubbing</button>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script>
+        const API_KEY = 'API_KEY'; //PASTE YOUR API KEY HERE
+        const API_URL = 'https://api-v2.pandavideo.com.br';
+        const API_DOWNLOAD = 'https://download-fr01.pandavideo.com:7443';
+        const DIR_FILE = './';
+        const dubbingId = 'DUBBING_ID'; //PASTE YOUR DUBBING ID HERE 
+        async function downloadFile(dubbingId) {
+            try {
+                console.log(`Download dubbing_id: ${dubbingId}`);
+                
+                const xhr = new XMLHttpRequest();
+                xhr.open("GET", `${API_DOWNLOAD}/audios/${dubbingId}/download`, true);
+                xhr.setRequestHeader("Authorization", API_KEY);
+                xhr.responseType = "blob";
+
+                xhr.onload = function() {
+                  if (xhr.status === 200) {
+                    const url = window.URL.createObjectURL(xhr.response);
+
+                    const a = document.createElement('a');
+                    a.href = url;
+                    a.download = `${dubbingId}.mp4`;
+                    document.body.appendChild(a);
+                    a.click();
+
+                    document.body.removeChild(a);
+                    window.URL.revokeObjectURL(url);
+                  }
+                };
+
+                xhr.send();
+
+            } catch (error) {
+                console.error(error);
+            }
+        }
+        async function downloadDubbing() {
+            await downloadFile(dubbingId);
+
+        }
+        const downloadButton = document.getElementById('downloadBtn');
+        downloadButton.addEventListener('click', downloadDubbing);
+    </script>
+</body>
+</html>
