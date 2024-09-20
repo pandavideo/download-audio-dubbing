@@ -12,13 +12,13 @@
         const API_URL = 'https://api-v2.pandavideo.com.br';
         const API_DOWNLOAD = 'https://download-fr01.pandavideo.com:7443';
         const DIR_FILE = './';
-        const dubbingId = 'DUBBING_ID'; //PASTE YOUR DUBBING ID HERE 
-        async function downloadFile(dubbingId) {
+        const AUDIO_ID = 'AUDIO_ID'; //PASTE YOUR AUDIO ID HERE 
+        async function downloadFile(AUDIO_ID) {
             try {
-                console.log(`Download dubbing_id: ${dubbingId}`);
+                console.log(`Download dubbing_id: ${AUDIO_ID}`);
                 
                 const xhr = new XMLHttpRequest();
-                xhr.open("GET", `${API_DOWNLOAD}/audios/${dubbingId}/download`, true);
+                xhr.open("GET", `${API_DOWNLOAD}/audios/${AUDIO_ID}/download`, true);
                 xhr.setRequestHeader("Authorization", API_KEY);
                 xhr.responseType = "blob";
 
@@ -28,7 +28,7 @@
 
                     const a = document.createElement('a');
                     a.href = url;
-                    a.download = `${dubbingId}.mp4`;
+                    a.download = `${AUDIO_ID}.mp3`;
                     document.body.appendChild(a);
                     a.click();
 
@@ -44,7 +44,7 @@
             }
         }
         async function downloadDubbing() {
-            await downloadFile(dubbingId);
+            await downloadFile(AUDIO_ID);
 
         }
         const downloadButton = document.getElementById('downloadBtn');
